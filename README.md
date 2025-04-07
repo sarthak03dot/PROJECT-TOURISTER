@@ -75,7 +75,7 @@ Ensure you have the following installed on your machine:
 
 ## Screenshots
 
-Add screenshots of your project here.
+![Image](https://github.com/user-attachments/assets/a26437e3-d2f5-4e79-b51b-e60b0a4f8fd5)
 
 ## Folder Structure
 
