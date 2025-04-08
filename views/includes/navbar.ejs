@@ -1,9 +1,26 @@
 <style>
+  .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #fff;
+  width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+.nav-custom {
+  z-index: 1030; 
+  background-color: #fff; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
   .btn-search {
     background-color: #dd91f6;
     color: #fff;
-    border: 20px;
-    padding: 0 1rem 0 1rem;
+    border: none;
+    padding: 0.5rem 1rem;
   }
   .logo{
     color: #fe424d;
@@ -12,14 +29,15 @@
     display: inline;
     margin-right: 0.5rem;
   }
-  search-inp{
+ .search-inp{
     border: 20px;
     padding: 0.5rem 3rem 0.5rem  3rem;
     font-size: 1rem;
   }
+  
 </style>
 
-<nav class="navbar navbar-expand-md border-bottom sticky-top">
+<nav class="navbar nav-custom navbar-expand-md border-bottom fixed-top">
   <div class="container-fluid bg-light">
     <a class="navbar-brand" href="/listings">
       <i class="fa-solid logo fa-globe">TripTales.in</i>
@@ -40,10 +58,11 @@
         <a class="nav-link m-2" href="/listings">Explore TripTales</a>
       </div>
       <div class="navbar-nav ms-auto">
-        <form class="d-flex" role="search">
+        <form class="d-flex" role="search" action="/listings/search" method="GET">
           <input
             class="form-control me-2 search-inp"
             type="search"
+            name="query"
             placeholder="Search Destination"
           />
           <button class="btn btn-search btn-search" type="submit">
@@ -52,7 +71,7 @@
         </form>
       </div>
       <div class="navbar-nav ms-auto">
-        <a class="nav-link m-2" href="/listings/new"><strong>TripTales Your Home </strong></a>
+        <a class="nav-link m-2" href="/listings/new"><strong><i class="fa-solid fa-upload ">Upload</i> </strong></a>
         <% if(!currUser) { %>
         <a class="nav-link m-2" href="/signup"><i class="fa-solid fa-user-plus">SignUp</i></a>
         <a class="nav-link m-2" href="/signin"><i class="fa-solid fa-right-to-bracket">SignIn</i></a>

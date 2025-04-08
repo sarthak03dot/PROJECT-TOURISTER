@@ -1,114 +1,247 @@
 <% layout("/layouts/boilerplate") %>
 <body>
   <style>
-    /*  Horizontal Scrolling Menu */
+    :root {
+      --main-color: #fe424d;
+      --secondary-color: #dd91f6;
+      --bg-color: #ffffff;
+      --snd-bg-color: #f9f9f9;
+      --text-color: #222222;
+      --text-muted: #555555;
+      --border-color: #e4e4e4;
+      --highlight-color: #f6c90e;
+      --nav-bg: #ffffff;
+      --nav-text: #111111;
+      --filter-bg: #f7f7f7;
+      --filter-hover: #e5e5ff;
+      --filter-text-hover: #6c5ce7;
+    }
 
+    /* Horizontal Scrolling Filter Menu */
     .filters {
-      white-space: nowrap;
+      display: flex;
+      flex-wrap: nowrap;
       overflow-x: auto;
-      background: #f0f0f0;
-      padding: 10px 0;
+      gap: 0.8rem;
+      padding: 1rem 2rem;
+      width: 100vw;
+      box-sizing: border-box;
+      background-color: var(--bg-color);
+    }
+
+    .filter {
+      text-align: center;
+      padding: 0.6rem 1rem;
+      width: 200px;
+      margin: 0 10px;
+      font-size: 1rem;
+      font-weight: 500;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+      background: var(--filter-bg);
+      box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.05);
+      border-radius: 10px;
+      border: none;
+      transition: all 0.3s ease;
+      color: var(--text-color);
     }
-    .filter i{
+
+    .filter i {
       font-size: 1.5rem;
+      margin-right: 0.5rem;
     }
-    .filter {
-      display: inline;
-      text-align: center;
-      padding: 10px 20px;
-      margin: 0 10px;
-      font-size: 20px;
-      background: #fff;
-      box-shadow: 1 2px 5px rgba(0,0,0,0.1);
-      border-radius: 20px;
+
+    .filter.active,
+    .filter:hover {
+      background-color: var(--filter-hover);
+      color: var(--filter-text-hover);
+      transform: scale(1.02);
+      cursor: pointer;
     }
+
     .filters::-webkit-scrollbar {
       display: none;
     }
-    .filter:hover {
-      opacity: 1;
-      cursor: pointer;
-    }
+
     .filter p {
       font-size: 0.8rem;
-      color: #333;
+      color: var(--text-muted);
     }
 
-    .carousel-inner img{
+    /* Carousel */
+    .carousel-inner img {
       width: 100%;
-      height: 30rem;
+      height: 20rem;
       object-fit: cover;
     }
 
-    
+    /* Responsive Grid */
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+    }
 
+    .col {
+      flex: 1 1 calc(33.33% - 1rem);
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 768px) {
+      .col {
+        flex: 1 1 calc(50% - 1rem);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .col {
+        flex: 1 1 100%;
+      }
+    }
+
+    /* Card Styling */
+    .card-body {
+      padding: 1rem 1.2rem;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-color);
+    }
+
+    .card-body h5 {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-color);
+    }
+
+    .card-body p {
+      font-size: 0.9rem;
+      margin: 0.2rem 0;
+      color: var(--text-muted);
+    }
+
+    .card {
+      animation: fadeInUp 0.5s ease forwards;
+      opacity: 0;
+      background-color: var(--snd-bg-color);
+      border: 1px solid var(--border-color);
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Listing Card */
+    .listing-card {
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .listing-card:hover {
+      transform: scale(1.02);
+    }
+
+    .listing-card img {
+      width: 100%;
+      height: 20rem;
+      object-fit: cover;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
   </style>
+
 
 
   <!-- Horizontal Scrolling Menu -->
 
+  
   <div class="filters" id="filters">
-    <div class="filter ">
+    <div class="filter" data-category="all">
       <div><i class="fa-solid fa-fire"></i></div>
-      <p>Trending</p>
+      <p>All</p>
     </div>
-    <div class="filter ">
-      <div><i class="fa-solid fa-bed"></i></div>
-      <p>Rooms</p>
+
+    <div class="filter" data-category="Luxury">
+      <div><i class="fa-solid fa-gem"></i></div>
+      <p>Luxury Stays</p>
     </div>
-    <div class="filter ">
-      <div><i class="fa-solid fa-mountain-city"></i></div>
-      <p>Iconic Cities</p>
+    <div class="filter" data-category="Caves">
+      <div><i class="fa-solid fa-water"></i></div>
+      <p>Caves</p>
     </div>
-    <div class="filter ">
-      <div><i class="fa-solid fa-mountain-sun"></i></div>
-      <p>Mountain</p>
+    <div class="filter" data-category="Jungle">
+      <div><i class="fa-solid fa-tree"></i></div>
+      <p>Jungle Retreats</p>
     </div>
-    <div class="filter ">
-      <div><i class="fa-brands fa-fort-awesome"></i></div>
-      <p>Castles</p>
+    <div class="filter" data-category="Desert">
+      <div><i class="fa-solid fa-sun"></i></div>
+      <p>Desert Adventures</p>
     </div>
-    <div class="filter ">
-      <div><i class="fa-solid fa-person-swimming"></i></div>
-      <p>Amazing Pools</p>
+    <div class="filter" data-category="Islands">
+      <div><i class="fa-solid fa-mountain"></i></div>
+      <p>Islands</p>
     </div>
-    <div class="filter ">
-      <div><i class="fa-solid fa-tractor"></i></div>
-      <p>Farms</p>
+    <div class="filter" data-category="Vineyards">
+      <div><i class="fa-solid fa-wine-bottle"></i></div>
+      <p>Vineyards</p>
     </div>
-    <div class="filter ">
-      <div><i class="fa-solid fa-landmark-dome"></i></div>
-      <p>Historical Homes</p>
+    <div class="filter" data-category="Treehouses">
+      <div><i class="fa-solid fa-warehouse"></i></div>
+      <p>Treehouses</p>
     </div>
-    <div class="filter ">
-      <div><i class="fa-solid fa-campground"></i></div>
-      <p>Camping</p>
+    <div class="filter" data-category="Cabins">
+      <div><i class="fa-solid fa-house"></i></div>
+      <p>Cabins</p>
     </div>
-    <div class="filter ">
-      <div><i class="fa-solid fa-snowman"></i></div>
-      <p>Arctic</p>
+    <div class="filter" data-category="Eco-Lodges">
+      <div><i class="fa-solid fa-leaf"></i></div>
+      <p>Eco-Lodges</p>
     </div>
-    <div class="filter ">
+    <div class="filter" data-category="apartment">
+      <div><i class="fa-solid fa-masks-theater"></i></div>
+      <p>Apartment</p>
+    </div>
+    <div class="filter" data-category="Beach">
       <div><i class="fa-solid fa-umbrella-beach"></i></div>
       <p>Beach</p>
     </div>
-    <div class="filter ">
-      <div><i class="fa-solid fa-house-user"></i></div>
-      <p>Tiny Homes</p>
+    <div class="filter" data-category="Historical">
+      <div><i class="fa-solid fa-landmark"></i></div>
+      <p>Historical Homes</p>
     </div>
-    <div class="filter ">
+    <div class="filter" data-category="Camping">
+      <div><i class="fa-solid fa-campground"></i></div>
+      <p>Camping</p>
+    </div>
+    <div class="filter" data-category="Domes">
       <div><i class="fa-solid fa-igloo"></i></div>
       <p>Domes</p>
     </div>
-    <div class="filter ">
+    <div class="filter" data-category="Boats">
       <div><i class="fa-solid fa-sailboat"></i></div>
       <p>Boats</p>
     </div>
+    <div class="filter" data-category="Farms">
+      <div><i class="fa-solid fa-tractor"></i></div>
+      <p>Farms</p>
+    </div>
+    <div class="filter" data-category="Pools">
+      <div><i class="fa-solid fa-person-swimming"></i></div>
+      <p>Swimming Pools</p>
+    </div>
+    <div class="filter" data-category="Castles">
+      <div><i class="fa-solid fa-chess-rook"></i></div>
+      <p>Castles</p>
+    </div>
+    <div class="filter" data-category="Arctic">
+      <div><i class="fa-solid fa-snowflake"></i></div>
+      <p>Arctic</p>
+    </div>
+    <div class="filter" data-category="Tiny-Homes">
+      <div><i class="fa-solid fa-house-chimney"></i></div>
+      <p>Tiny Homes</p>
+    </div>
+    
+    
   </div>
 
 <!-- IMAGE SLIDER -->
@@ -164,11 +297,12 @@
       </button>
     </div>
 
+    
 
   <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
     <% for(let listing of allListings){ %>
     <a href="/listings/<%= listing._id%>" class="listing-link">
-      <div class="card listing-card col">
+      <div class="card listing-card col" data-category="<%= listing.category%>">
         <img
           src="<%= listing.image.url %>"
           class="card-img-top"
@@ -181,12 +315,16 @@
         <div class="card-body ms-3">
           <p class="card-text">
             <b><%=listing.title %></b> <br />
-            <p><%= listing.location %>, <%= listing.country %></p>
-            <p><i class="fa-solid fa-signs-post"><%= listing.owner.username %></i></p>
+            <p><%= listing.location %>,<%= listing.country %></p>
+            <p> Category :<%= listing.category %></p>
+            <p><i class="fa-solid fa-signs-post"></i> <%= listing.owner.username %></p>
+
           </p>
         </div>
       </div>
     </a>
     <% } %>
   </div>
+
+  <script src="../../public/js/script.js"></script>
 </body>

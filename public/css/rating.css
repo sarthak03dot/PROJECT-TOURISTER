@@ -1,3 +1,8 @@
+.starability-slot{
+  display: flex !important;
+  flex-direction: row !important;
+}
+
 .starability-result {
   position: relative;
   width: 150px;

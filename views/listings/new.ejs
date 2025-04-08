@@ -1,72 +1,127 @@
 <% layout("/layouts/boilerplate") %>
-<div class="row mt-3">
-  <div class="col-8 offset-2">
-    <h2 class="fw-bold">Add Your Favorite Place</h2>
-    <form
-      method="POST"
-      action="/listings"
-      class="needs-validation"
-      novalidate
-      enctype="multipart/form-data"
-    >
-      <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
-        <input
-          name="listing[title]"
-          placeholder="Enter title"
-          type="text"
-          class="form-control"
-          required
-        />
-        <div class="valid-feedback">Title looks good!</div>
-      </div>
-      <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea
-          name="listing[description]"
-          class="form-control"
-          required
-        ></textarea>
-        <div class="invalid-feedback">Please Enter short description!</div>
-      </div>
-      <div class="mb-3">
-        <label for="image" class="form-label">Upload Listing Image</label>
-        <input
-          name="listing[image]"
-          class="form-control"
-          type="file"
-          required
-        />
-        <div class="invalid-feedback">Please enter a valid Image-Link!</div>
-      </div>
-      <div class="row">
-        <div class="mb-3 col-md-4">
-        <label for="location" class="form-label">Location</label>
-        <input
-          name="listing[location]"
-          placeholder="Enter location"
-          type="text"
-          class="form-control"
-          required
-        />
-        <div class="invalid-feedback">Location should be valid!</div>
-      </div>
-
-        <div class="mb-3 col-md-8">
-          <label for="country" class="form-label">Country</label>
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+      <h2 class="fw-bold">Add Your Favorite Place</h2>
+      <form
+        method="POST"
+        action="/listings"
+        class="needs-validation"
+        novalidate
+        enctype="multipart/form-data"
+        onsubmit="handleSubmit(event)"
+      >
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
           <input
-            name="listing[country]"
-            placeholder="country name"
+            name="listing[title]"
+            placeholder="Enter title"
             type="text"
             class="form-control"
             required
           />
-          <div class="invalid-feedback">Country name should be valid!</div>
+          <div class="valid-feedback">Title looks good!</div>
         </div>
-      </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea
+            name="listing[description]"
+            class="form-control"
+            required
+          ></textarea>
+          <div class="invalid-feedback">Please Enter short description!</div>
+        </div>
+        <div class="mb-3">
+          <label for="image" class="form-label">Upload Listing Image</label>
+          <input
+            name="listing[image]"
+            class="form-control"
+            type="file"
+            required
+          />
+          <small class="form-text text-muted">Upload images in .jpg or .png format (max size: 2MB).</small>
 
-      <button class="btn mt-3 btn-dark col-3 add-btn">Add</button>
-      <br />
-    </form>
+          <div class="invalid-feedback">Please enter a valid Image-Link!</div>
+        </div>
+        <div class="row">
+          <div class="mb-3 col-md-4">
+            <label for="location" class="form-label">Location</label>
+            <input
+              name="listing[location]"
+              placeholder="Enter location"
+              type="text"
+              class="form-control"
+              required
+            />
+            <div class="invalid-feedback">Location should be valid!</div>
+          </div>
+
+          <div class="mb-3 col-md-8">
+            <label for="country" class="form-label">Country</label>
+            <input
+              name="listing[country]"
+              placeholder="country name"
+              type="text"
+              class="form-control"
+              required
+            />
+            <div class="invalid-feedback">Country name should be valid!</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="category" class="form-label">Category</label>
+          <select
+            name="listing[category]"
+            id="category"
+            class="form-control"
+            required
+            onchange="toggleOtherCategory()"
+          >
+            <option value="" disabled selected>Select a Category</option>
+            <option value="Luxury">Luxury Stays</option>
+            <option value="Caves">Caves</option>
+            <option value="Jungle">Jungle Retreats</option>
+            <option value="Desert">Desert Adventures</option>
+            <option value="Islands">Islands</option>
+            <option value="Vineyards">Vineyards</option>
+            <option value="Treehouses">Treehouses</option>
+            <option value="Cabins">Cabins</option>
+            <option value="Eco-Lodges">Eco-Lodges</option>
+            <option value="Apartment">Apartment</option>
+            <option value="Beach">Beach</option>
+            <option value="Historical">Historical Homes</option>
+            <option value="Camping">Camping</option>
+            <option value="Domes">Domes</option>
+            <option value="Boats">Boats</option>
+            <option value="Farms">Farms</option>
+            <option value="Pools">Swimming Pools</option>
+            <option value="Castles">Castles</option>
+            <option value="Arctic">Arctic</option>
+            <option value="Tiny-Homes">Tiny Homes</option>
+            <option value="Other">Other</option>
+          </select>
+          <div class="invalid-feedback">
+            Select the category of this location.
+          </div>
+        </div>
+
+        <div class="mb-3" id="otherCategoryInput" style="display: none">
+          <label for="other-category" class="form-label"
+            >Specify Other Category</label
+          >
+          <input
+            type="text"
+            name="listing[other-category]"
+            id="other-category"
+            class="form-control"
+            placeholder="Enter your category"
+          />
+        </div>
+
+        <button class="btn m-3 btn-dark col-12 col-md-8 col-lg-6 add-btn">Add</button>
+        <br />
+      </form>
+    </div>
   </div>
 </div>
+<script src="../../public/js/script.js"></script>

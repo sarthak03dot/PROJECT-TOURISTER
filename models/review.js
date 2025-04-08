@@ -1,4 +1,4 @@
-const { date, number, ref } = require("joi");
+const { date, number, ref, required } = require("joi");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -8,6 +8,7 @@ const reviewSchema = new Schema({
         type: Number,
         min: 1,
         max: 5,
+        required:true,
     },
     createdAt:{
         type: Date,

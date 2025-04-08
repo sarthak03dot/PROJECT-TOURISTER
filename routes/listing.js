@@ -8,6 +8,9 @@ const Multer = require("multer");
 const { storage } = require("../cloudconfig.js");
 const upload = Multer({ storage });
 
+// search
+router.get("/search", wrapAsync(listingController.searchListings));
+
 router
   .route("/")
   .get(wrapAsync(listingController.index))
