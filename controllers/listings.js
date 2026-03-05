@@ -100,23 +100,29 @@ module.exports.showListing =  async (req, res) => {
   };
 
 
-  module.exports.searchListings = async(req, res) => {
-    const query = req.query.query.trim().toLowerCase();
+  module.exports.searchListings = async (req, res) => {
+    let { query, category } = req.query;
+    let filter = {};
 
-    if(!query){
-      return res.redirect('/listings');
+    if (query && query.trim() !== "") {
+        const regex = new RegExp(query.trim(), "i");
+        filter.$or = [
+            { title: regex },
+            { location: regex },
+            { country: regex },
+        ];
     }
-    try{
-      const allListings = await Listing.find({
-        $or:[
-          { title: {$regex : query, $options : 'i'}},
-          { location: {$regex : query, $options : 'i'}},
-          { category: {$regex : query, $options : 'i'}},
-        ],
-      });
-      res.render('listings', {allListings, query});
-    }catch (err) {
-      console.log(err);
-      res.status(500).send('Server Error.');
+
+    if (category && category !== "all") {
+        filter.category = category;
+    }
+
+    try {
+        const allListings = await Listing.find(filter).populate("owner");
+        res.render("listings/index.ejs", { allListings, searchQuery: query, selectedCategory: category });
+    } catch (err) {
+        console.error(err);
+        req.flash("error", "Search failed. Please try again.");
+        res.redirect("/listings");
     }
   };

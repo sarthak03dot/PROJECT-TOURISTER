@@ -73,6 +73,11 @@ passport.use(new LocalStraregy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+const bookingRouter = require("./routes/booking.js");
+const bookingController = require("./controllers/bookings.js");
+const wrapAsync = require("./utils/wrapAsync.js");
+const { isSignedIn } = require("./middleware.js");
+
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
@@ -82,6 +87,8 @@ app.use((req, res, next) => {
 
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
+app.use("/listings/:id/bookings", bookingRouter);
+app.get("/dashboard", isSignedIn, wrapAsync(bookingController.userDashboard));
 app.use("/", userRouter);
 
 app.all("*", (req, res, next) => {

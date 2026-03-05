@@ -19,18 +19,14 @@
     
     <div class="collapse navbar-collapse" id="navbarNav"> 
       <div class="navbar-nav mx-auto">
-        <form class="d-flex position-relative align-items-center" role="search" action="/listings/search" method="GET">
-          <input
-            class="form-control search-inp shadow-none"
-            type="search"
-            name="query"
-            placeholder="Search wonderful destinations..."
-            style="width: 350px;"
-          />
-          <button class="btn btn-search" type="submit">
-            <i class="fa-solid fa-magnifying-glass"></i>
+        <form class="d-flex mx-auto search-form" role="search" action="/listings/search" method="GET">
+        <div class="search-input-wrapper position-relative">
+          <input class="form-control me-2 ps-4 rounded-pill border-0 shadow-sm" name="query" type="search" placeholder="Search destinations..." aria-label="Search" style="width: 350px;">
+          <button class="btn btn-primary-custom rounded-circle position-absolute end-0 top-50 translate-middle-y me-2 p-0 d-flex align-items-center justify-content-center" type="submit" style="width: 32px; height: 32px;">
+            <i class="fa-solid fa-magnifying-glass fs-6"></i>
           </button>
-        </form>
+        </div>
+      </form>
       </div>
 
       <div class="navbar-nav ms-auto align-items-center">
@@ -54,7 +50,8 @@
             <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
               <li><span class="dropdown-item-text text-muted small">Logged in as <b><%= currUser.username %></b></span></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="/signout"><i class="fa-solid fa-sign-out-alt me-2"></i>Logout</a></li>
+            <li><a class="dropdown-item" href="/dashboard"><i class="fa-solid fa-chart-line me-2"></i>Dashboard</a></li>
+            <li><a class="dropdown-item text-danger" href="/logout"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a></li>
             </ul>
           </div>
         <% } %>

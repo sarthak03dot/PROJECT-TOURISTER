@@ -1,49 +1,51 @@
 <% layout("/layouts/boilerplate") %>
 
 <!-- Filter Section -->
-<div class="filters-container mb-4">
-  <div class="filters py-3" id="filters">
-    <div class="filter active" data-category="all">
-      <i class="fa-solid fa-fire"></i>
-      <span>Trending</span>
-    </div>
-    <div class="filter" data-category="Luxury">
-      <i class="fa-solid fa-gem"></i>
-      <span>Luxury</span>
-    </div>
-    <div class="filter" data-category="Beach">
-      <i class="fa-solid fa-umbrella-beach"></i>
-      <span>Beachfront</span>
-    </div>
-    <div class="filter" data-category="Pools">
-      <i class="fa-solid fa-person-swimming"></i>
-      <span>Amazing Pools</span>
-    </div>
-    <div class="filter" data-category="Jungle">
-      <i class="fa-solid fa-tree"></i>
-      <span>Tropical</span>
-    </div>
-    <div class="filter" data-category="Historical">
-      <i class="fa-solid fa-landmark"></i>
-      <span>Historical</span>
-    </div>
-    <div class="filter" data-category="Mountains">
-      <i class="fa-solid fa-mountain"></i>
-      <span>Mountains</span>
-    </div>
-    <div class="filter" data-category="Camping">
-      <i class="fa-solid fa-campground"></i>
-      <span>Camping</span>
-    </div>
-    <div class="filter" data-category="Castles">
-      <i class="fa-solid fa-chess-rook"></i>
-      <span>Castles</span>
-    </div>
-    <div class="filter" data-category="Arctic">
-      <i class="fa-solid fa-snowflake"></i>
-      <span>Arctic</span>
-    </div>
-  </div>
+<div id="filters" class="d-flex align-items-center mb-4 pb-2 px-1 gap-4 overflow-x-auto text-nowrap hide-scrollbar">
+    <a href="/listings" class="filter text-decoration-none d-block text-center <%= !selectedCategory ? 'active' : '' %>" style="min-width: 60px;">
+        <i class="fa-solid fa-house d-block mb-1 fs-5"></i>
+        <span class="small fw-semibold">All</span>
+    </a>
+    <a href="/listings/search?category=Luxury" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Luxury' ? 'active' : '' %>">
+        <i class="fa-solid fa-crown d-block mb-1 fs-5"></i>
+        <span class="small fw-semibold">Luxury</span>
+    </a>
+    <a href="/listings/search?category=Beach" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Beach' ? 'active' : '' %>">
+        <i class="fa-solid fa-umbrella-beach d-block mb-1 fs-5"></i>
+        <span class="small fw-semibold">Beach</span>
+    </a>
+    <a href="/listings/search?category=Pools" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Pools' ? 'active' : '' %>">
+        <i class="fa-solid fa-person-swimming d-block mb-1 fs-5"></i>
+        <span class="small fw-semibold">Pools</span>
+    </a>
+    <a href="/listings/search?category=Jungle" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Jungle' ? 'active' : '' %>">
+        <i class="fa-solid fa-tree d-block mb-1 fs-5"></i>
+        <span class="small fw-semibold">Jungle</span>
+    </a>
+    <a href="/listings/search?category=Mountains" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Mountains' ? 'active' : '' %>">
+        <i class="fa-solid fa-mountain d-block mb-1 fs-5"></i>
+        <span class="small fw-semibold">Mountains</span>
+    </a>
+    <a href="/listings/search?category=Historical" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Historical' ? 'active' : '' %>">
+        <i class="fa-solid fa-building-columns d-block mb-1 fs-5"></i>
+        <span class="small fw-semibold">Historical</span>
+    </a>
+    <a href="/listings/search?category=Camping" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Camping' ? 'active' : '' %>">
+        <i class="fa-solid fa-tent d-block mb-1 fs-5"></i>
+        <span class="small fw-semibold">Camping</span>
+    </a>
+    <a href="/listings/search?category=Cabins" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Cabins' ? 'active' : '' %>">
+        <i class="fa-solid fa-house-chimney d-block mb-1 fs-5"></i>
+        <span class="small fw-semibold">Cabins</span>
+    </a>
+    <a href="/listings/search?category=Apartment" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Apartment' ? 'active' : '' %>">
+        <i class="fa-solid fa-building d-block mb-1 fs-5"></i>
+        <span class="small fw-semibold">Apartment</span>
+    </a>
+    <a href="/listings/search?category=Arctic" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Arctic' ? 'active' : '' %>">
+        <i class="fa-solid fa-snowflake d-block mb-1 fs-5"></i>
+        <span class="small fw-semibold">Arctic</span>
+    </a>
 </div>
 
 <!-- Main Content -->
