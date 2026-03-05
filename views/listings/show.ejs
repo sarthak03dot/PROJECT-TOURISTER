@@ -40,11 +40,11 @@
         <!-- ... host info ... -->
         <div class="d-flex align-items-center justify-content-between pb-3 border-bottom mb-4">
           <div>
-            <h4 class="mb-1">Entire home hosted by <%= listing.owner.username %></h4>
+            <h4 class="mb-1">Entire home hosted by <%= listing.owner ? listing.owner.username : "Anonymous" %></h4>
             <p class="text-muted mb-0 small"><%= Math.floor(Math.random() * 5) + 2 %> guests • <%= Math.floor(Math.random() * 4) + 1 %> bedrooms • <%= Math.floor(Math.random() * 3) + 1 %> beds • <%= Math.floor(Math.random() * 2) + 1 %> baths</p>
           </div>
           <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold" style="width: 48px; height: 48px; font-size: 1.2rem;">
-            <%= listing.owner.username.charAt(0).toUpperCase() %>
+            <%= listing.owner ? listing.owner.username.charAt(0).toUpperCase() : "A" %>
           </div>
         </div>
 
@@ -58,14 +58,14 @@
 
         <hr class="my-4">
 
-        <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
+        <% if(currUser && listing.owner && listing.owner._id.equals(currUser._id)) { %>
           <div class="d-flex gap-3 mb-5">
             <a href="/listings/<%= listing._id %>/edit" class="btn btn-primary-custom px-4">
               <i class="fa-solid fa-pen-to-square me-2"></i>Edit Listing
             </a>
-            <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" class="d-inline">
+            <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
               <button class="btn btn-outline-danger px-4">
-                <i class="fa-solid fa-trash-can me-2"></i>Delete
+                <i class="fa-solid fa-trash me-2"></i>Delete
               </button>
             </form>
           </div>
