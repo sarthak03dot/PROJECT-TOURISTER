@@ -4,7 +4,7 @@ const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
 module.exports.index = async (req, res) => {
-  const allListings = await Listing.find({}).populate("owner");;
+  const allListings = await Listing.find({}).populate("owner");
   res.render("listings/index.ejs", { allListings });
 };
 
@@ -18,29 +18,44 @@ module.exports.showListing =  async (req, res) => {
       .populate({ path: "reviews", populate: { path: "author" } })
       .populate("owner");
     if (!listing) {
-      req.flash("error", "Listing you requested for dose not exist!");
-      res.redirect("/listings");
+      req.flash("error", "Listing you requested for does not exist!");
+      return res.redirect("/listings");
     }
     res.render("listings/show.ejs", { listing });
   };
 
 
   module.exports.createListings = async (req, res, next) => {
-    let response = await geocodingClient
-      .forwardGeocode({
-        query: req.body.listing.location,
-        limit: 1,
-      })
-      .send();
+    let response;
+    try {
+        response = await geocodingClient
+            .forwardGeocode({
+                query: req.body.listing.location,
+                limit: 1,
+            })
+            .send();
+    } catch (err) {
+        console.error("GEOCODING ERROR:", err.message);
+        // We'll continue and use fallback geometry below
+    }
 
+    if (!req.file) {
+      req.flash("error", "Listing must have an image!");
+      return res.redirect("/listings/new");
+    }
     let url = req.file.path;
     let filename = req.file.filename;
     const newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
     newListing.image = {url, filename};
 
-    newListing.geometry = response.body.features[0].geometry;
-
+    if (response && response.body.features && response.body.features.length > 0) {
+      newListing.geometry = response.body.features[0].geometry;
+    } else {
+      // Fallback geometry (center of world or a specific default)
+      newListing.geometry = { type: "Point", coordinates: [0, 0] };
+    }
+    
     let savedListing = await newListing.save();
     console.log(savedListing);
     req.flash("success", "New listing Created!");
@@ -50,11 +65,11 @@ module.exports.showListing =  async (req, res) => {
   module.exports.editlistings = async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id);
-    req.flash("success", "Listing Edited!");
     if (!listing) {
-      req.flash("error", "Listing you requested for dose not exist!");
-      res.redirect("/listings");
+      req.flash("error", "Listing you requested for does not exist!");
+      return res.redirect("/listings");
     }
+    req.flash("success", "Edit your listing below");
     let OriginalImageUrl = listing.image.url;
     OriginalImageUrl = OriginalImageUrl.replace("/upload","/upload/w_250");
     res.render("listings/edit.ejs", { listing , OriginalImageUrl});
@@ -71,13 +86,24 @@ module.exports.showListing =  async (req, res) => {
     let listingData = { ...req.body.listing };
 
     if (oldListing.location !== listingData.location) {
-        let response = await geocodingClient
-            .forwardGeocode({
-                query: listingData.location,
-                limit: 1,
-            })
-            .send();
-        listingData.geometry = response.body.features[0].geometry;
+        let response;
+        try {
+            response = await geocodingClient
+                .forwardGeocode({
+                    query: listingData.location,
+                    limit: 1,
+                })
+                .send();
+            
+            if (response && response.body.features && response.body.features.length > 0) {
+                listingData.geometry = response.body.features[0].geometry;
+            } else {
+                listingData.geometry = { type: "Point", coordinates: [0, 0] };
+            }
+        } catch (err) {
+            console.error("GEOCODING UPDATE ERROR:", err.message);
+            listingData.geometry = oldListing.geometry || { type: "Point", coordinates: [0, 0] };
+        }
     }
 
     let listing = await Listing.findByIdAndUpdate(id, listingData);
@@ -88,7 +114,7 @@ module.exports.showListing =  async (req, res) => {
     await listing.save();
     }
     
-    req.flash("success", "Listing Update successfully!");
+    req.flash("success", "Listing Updated successfully!");
     res.redirect(`/listings/${id}`);
   };
 

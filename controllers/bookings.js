@@ -39,16 +39,19 @@ module.exports.userDashboard = async (req, res) => {
     // Refresh user to get latest wishlist
     const user = await require("../models/user").findById(req.user._id).populate("wishlist");
     
-    // Bookings I made (as a traveler)
-    const bookings = await Booking.find({ guest: req.user._id }).populate("listing");
-    
     // My listings (as a host)
     const listings = await Listing.find({ owner: req.user._id });
     
     // Bookings people made for my listings (as a host)
-    const incomingBookings = await Booking.find({ 
+    let incomingBookingsRaw = await Booking.find({ 
         listing: { $in: listings.map(l => l._id) } 
     }).populate("listing").populate("guest");
+
+    // Filter out bookings where the listing might have been deleted
+    const bookings = (await Booking.find({ guest: req.user._id }).populate("listing"))
+        .filter(b => b.listing !== null);
+    
+    const incomingBookings = incomingBookingsRaw.filter(b => b.listing !== null);
 
     res.render("users/dashboard.ejs", { bookings, listings, incomingBookings, wishlist: user.wishlist });
 };

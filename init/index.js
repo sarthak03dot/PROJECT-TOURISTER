@@ -1,29 +1,37 @@
+require('dotenv').config();
 const mongoose = require("mongoose");
 const initdata = require("./data.js");
 const Listing = require("../models/listing.js");
 const DB_URL = process.env.ATLASDB_URL;
-const url = process.env.M_URL; 
+const M_URL = process.env.M_URL; 
 
 
-main()
-  .then(() => {
-    console.log("Connected to DB");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+// Remove standalone main() call at top level
 
 async function main() {
-  await mongoose.connect("mongodb+srv://aryaappatel:dNtk7C3fKFsiAP7D@cluster0.ilflx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
+  await mongoose.connect(DB_URL || "mongodb://127.0.0.1:27017/TripTales");
 }
 
 
 
 
 const initDB = async()=>{
-    await Listing.deleteMany({});
-    initdata.data = initdata.data.map((obj) => ({ ...obj, owner:'W0MRXMu9LICorF5ltEZeFJSPblETwdqT'}));
-    await Listing.insertMany(initdata.data);
-    console.log("data was initilized");
+    try {
+        await Listing.deleteMany({});
+        initdata.data = initdata.data.map((obj) => ({ ...obj, owner:'69a9bf75b2b534ed2e36d92c'}));
+        await Listing.insertMany(initdata.data);
+        console.log("data was initialized");
+    } catch (err) {
+        console.log("Error initializing data:", err);
+    }
 };
-initDB();
+
+main()
+  .then(async () => {
+    console.log("Connected to DB");
+    await initDB();
+    mongoose.connection.close();
+  })
+  .catch((err) => {
+    console.log("Connection error:", err);
+  });

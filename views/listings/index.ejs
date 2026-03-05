@@ -168,6 +168,9 @@
         event.preventDefault();
         event.stopPropagation();
         
+        const btn = event.currentTarget; // Capture button early
+        const icon = btn.querySelector('i');
+        
         try {
             const response = await fetch(`/wishlist/${id}`, {
                 method: 'POST',
@@ -181,8 +184,6 @@
             
             const data = await response.json();
             if (data.success) {
-                const btn = event.currentTarget;
-                const icon = btn.querySelector('i');
                 if (data.added) {
                     icon.classList.remove('fa-regular');
                     icon.classList.add('fa-solid', 'text-danger');

@@ -1,7 +1,33 @@
 <%- layout("/layouts/boilerplate") %>
 
-<div class="row" mt-3>
-    <div class="alert alert-danger col-6 offset-3" role="alert">
-    <p class="alert-heading"><%= err.message %></p>
-      </div>
+<div class="container py-5">
+    <div class="row min-vh-50 align-items-center justify-content-center mt-5">
+        <div class="col-md-8 col-lg-6 text-center">
+            <div class="error-card p-5 shadow-lg border-0 bg-white" style="border-radius: 2rem;">
+                <div class="mb-4">
+                    <div class="rounded-circle bg-danger-subtle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                        <i class="fa-solid fa-triangle-exclamation text-danger fs-1"></i>
+                    </div>
+                </div>
+                
+                <h2 class="fw-bold text-dark mb-3">Oops! Something went wrong</h2>
+                <p class="text-muted fs-5 mb-4"><%= err.message %></p>
+                
+                <% if(err.statusCode === 404) { %>
+                    <p class="text-secondary small mb-4">The page you're looking for might have been moved, deleted, or never existed. Don't worry, we'll help you get back on track!</p>
+                <% } else { %>
+                    <p class="text-secondary small mb-4"><i class="fa-solid fa-circle-info me-2"></i>If you're hosting a stay and see a 401 error, please check your API tokens in the .env file.</p>
+                <% } %>
+
+                <div class="d-grid gap-2 col-md-8 mx-auto">
+                    <a href="/listings" class="btn btn-primary-custom btn-lg py-3 rounded-pill shadow-sm">
+                        <i class="fa-solid fa-house me-2"></i>Back to Home
+                    </a>
+                    <button onclick="window.history.back()" class="btn btn-outline-secondary btn-sm border-0 bg-transparent text-muted mt-2">
+                        <i class="fa-solid fa-arrow-left me-1"></i>Go back
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

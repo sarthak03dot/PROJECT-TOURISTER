@@ -3,6 +3,10 @@ const Review = require("../models/review");
 
 module.exports.createReview = async (req, res) => {
   let listing = await Listing.findById(req.params.id);
+  if (!listing) {
+    req.flash("error", "Listing you're trying to review does not exist!");
+    return res.redirect("/listings");
+  }
   let newReview = new Review(req.body.review);
   newReview.author = req.user._id;
 

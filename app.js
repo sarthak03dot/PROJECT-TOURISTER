@@ -14,14 +14,14 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
-const LocalStraregy = require("passport-local");
+const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 const userRouter = require("./routes/user.js");
 const db_URL = process.env.ATLASDB_URL;
 const url = process.env.M_URL;
 
 async function main() {
-  await mongoose.connect(url);
+  await mongoose.connect(db_URL);
 }
 main()
   .then(() => {
@@ -68,7 +68,7 @@ app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStraregy(User.authenticate()));
+passport.use(new LocalStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
@@ -82,7 +82,13 @@ app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   res.locals.currUser = req.user;
+  res.locals.mapToken = process.env.MAP_TOKEN;
+  res.locals.selectedCategory = null;
   next();
+});
+
+app.get("/", (req, res) => {
+  res.redirect("/listings");
 });
 
 app.use("/listings", listingsRouter);
@@ -96,8 +102,9 @@ app.all("*", (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  let { statusCode = 500, message = "Something is wromg!" } = err;
-  res.status(statusCode).render("listings/Error.ejs", { err });
+  let { statusCode = 500, message = "Something is wrong!" } = err;
+  console.error("SERVER ERROR:", err);
+  res.status(statusCode).render("listings/Error.ejs", { err: { statusCode, message } });
 });
 
 app.listen(8080, () => {

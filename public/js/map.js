@@ -1,19 +1,19 @@
-mapboxgl.accessToken = mapToken;
+// Fallback coordinates if listing geometry is missing or invalid
+const defaultLocation = [25.0143, 82.8417]; // [lat, lng]
+const coordinates = (listing && listing.geometry && listing.geometry.coordinates && listing.geometry.coordinates.length === 2) 
+    ? [listing.geometry.coordinates[1], listing.geometry.coordinates[0]] // Mapbox [lng, lat] -> Leaflet [lat, lng]
+    : defaultLocation;
 
-const map = new mapboxgl.Map({
-    container: 'map', // container ID
-    style: 'mapbox://styles/mapbox/streets-v12', // style URL
-    center: listing.geometry.coordinates, // starting position [lng, lat]
-    zoom: 9, // starting zoom
-});
+const map = L.map('map').setView(coordinates, 9);
 
-// Create a default Marker and add it to the map.
-const marker = new mapboxgl.Marker({ color: '#ff385c' })
-    .setLngLat(listing.geometry.coordinates)
-    .setPopup(
-        new mapboxgl.Popup({ offset: 25 })
-            .setHTML(`<h4>${listing.title}</h4><p>Exact location provided after booking</p>`)
-    )
-    .addTo(map);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
 
-map.addControl(new mapboxgl.NavigationControl());
+const marker = L.marker(coordinates).addTo(map)
+    .bindPopup(`<h4>${listing.title}</h4><p>Exact location provided after booking</p>`);
+
+if (coordinates === defaultLocation) {
+    marker.setPopupContent(`<h4>${listing.title}</h4><p>Location not found, showing default area</p>`);
+}
