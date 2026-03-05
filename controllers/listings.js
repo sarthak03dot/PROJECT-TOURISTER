@@ -1,4 +1,7 @@
 const Listing = require("../models/listing");
+const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+const mapToken = process.env.MAP_TOKEN;
+const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
 module.exports.index = async (req, res) => {
   const allListings = await Listing.find({}).populate("owner");;
@@ -23,12 +26,23 @@ module.exports.showListing =  async (req, res) => {
 
 
   module.exports.createListings = async (req, res, next) => {
+    let response = await geocodingClient
+      .forwardGeocode({
+        query: req.body.listing.location,
+        limit: 1,
+      })
+      .send();
+
     let url = req.file.path;
     let filename = req.file.filename;
     const newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
     newListing.image = {url, filename};
-    await newListing.save();
+
+    newListing.geometry = response.body.features[0].geometry;
+
+    let savedListing = await newListing.save();
+    console.log(savedListing);
     req.flash("success", "New listing Created!");
     res.redirect("/listings");
   };
@@ -51,7 +65,22 @@ module.exports.showListing =  async (req, res) => {
   
   module.exports.updateListings = async (req, res) => {
     let { id } = req.params;
-    let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+    
+    // Check if location changed to update geometry
+    let oldListing = await Listing.findById(id);
+    let listingData = { ...req.body.listing };
+
+    if (oldListing.location !== listingData.location) {
+        let response = await geocodingClient
+            .forwardGeocode({
+                query: listingData.location,
+                limit: 1,
+            })
+            .send();
+        listingData.geometry = response.body.features[0].geometry;
+    }
+
+    let listing = await Listing.findByIdAndUpdate(id, listingData);
     if(typeof(req.file) !== "undefined" )  {
     let url = req.file.path;
     let filename = req.file.filename;

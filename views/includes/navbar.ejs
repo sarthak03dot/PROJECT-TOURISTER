@@ -1,31 +1,12 @@
-<style>
-  .btn-search {
-    background-color: #dd91f6;
-    color: #fff;
-    border: 20px;
-    padding: 0 1rem 0 1rem;
-  }
-  .logo{
-    color: #fe424d;
-  }
-  .btn-search i{
-    display: inline;
-    margin-right: 0.5rem;
-  }
- .search-inp{
-    border: 20px;
-    padding: 0.5rem 3rem 0.5rem  3rem;
-    font-size: 1rem;
-  }
-</style>
-
-<nav class="navbar navbar-expand-md border-bottom sticky-top">
-  <div class="container-fluid bg-light">
-    <a class="navbar-brand" href="/listings">
-      <i class="fa-solid logo fa-globe">TripTales.in</i>
+<nav class="navbar navbar-expand-md sticky-top">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="/listings">
+      <i class="fa-solid fa-earth-americas me-2"></i>
+      <span>TripTales</span>
     </a>
+    
     <button
-      class="navbar-toggler"
+      class="navbar-toggler border-0"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#navbarNav"  
@@ -35,31 +16,47 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
+    
     <div class="collapse navbar-collapse" id="navbarNav"> 
-        <div class="navbar-nav">
-        <a class="nav-link m-2" href="/listings">Explore TripTales</a>
-      </div>
-      <div class="navbar-nav ms-auto">
-        <form class="d-flex" role="search" action="/listings/search" method="GET">
+      <div class="navbar-nav mx-auto">
+        <form class="d-flex position-relative align-items-center" role="search" action="/listings/search" method="GET">
           <input
-            class="form-control me-2 search-inp"
+            class="form-control search-inp shadow-none"
             type="search"
             name="query"
-            placeholder="Search Destination"
+            placeholder="Search wonderful destinations..."
+            style="width: 350px;"
           />
-          <button class="btn btn-search btn-search" type="submit">
-            <i class="fa-solid fa-magnifying-glass"></i> Search
+          <button class="btn btn-search" type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
           </button>
         </form>
       </div>
-      <div class="navbar-nav ms-auto">
-        <a class="nav-link m-2" href="/listings/new"><strong><i class="fa-solid fa-upload ">Upload</i> </strong></a>
+
+      <div class="navbar-nav ms-auto align-items-center">
+        <a class="nav-link" href="/listings/new">
+          <i class="fa-solid fa-plus-circle me-1"></i>Host your stay
+        </a>
+        
         <% if(!currUser) { %>
-        <a class="nav-link m-2" href="/signup"><i class="fa-solid fa-user-plus">SignUp</i></a>
-        <a class="nav-link m-2" href="/signin"><i class="fa-solid fa-right-to-bracket">SignIn</i></a>
-        <% } %>
-        <% if(currUser) { %>
-        <a class="nav-link m-2" href="/signout"><i class="fa-solid fa-arrow-right-from-bracket">Sign Out</i></a>
+          <div class="d-flex gap-2 ms-lg-3 mt-3 mt-lg-0">
+            <a class="btn btn-outline-secondary btn-sm px-3 rounded-pill" href="/signin">Sign In</a>
+            <a class="btn btn-primary-custom btn-sm px-3 rounded-pill" href="/signup">Sign Up</a>
+          </div>
+        <% } else { %>
+          <div class="dropdown ms-lg-3">
+            <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown">
+              <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center text-white" style="width: 32px; height: 32px; font-size: 0.8rem;">
+                <%= currUser.username.charAt(0).toUpperCase() %>
+              </div>
+              <span class="d-lg-none"><%= currUser.username %></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+              <li><span class="dropdown-item-text text-muted small">Logged in as <b><%= currUser.username %></b></span></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/signout"><i class="fa-solid fa-sign-out-alt me-2"></i>Logout</a></li>
+            </ul>
+          </div>
         <% } %>
       </div>
     </div>

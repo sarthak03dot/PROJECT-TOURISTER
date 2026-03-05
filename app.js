@@ -1,4 +1,4 @@
-if(process.env.NODE_ENV != "production"){
+if (process.env.NODE_ENV != "production") {
   require("dotenv").config();
 }
 const express = require("express");
@@ -20,7 +20,9 @@ const userRouter = require("./routes/user.js");
 const db_URL = process.env.ATLASDB_URL;
 const url = process.env.M_URL;
 
-
+async function main() {
+  await mongoose.connect(url);
+}
 main()
   .then(() => {
     console.log("Connected to DB");
@@ -29,10 +31,6 @@ main()
     console.log(err);
   });
 
-async function main() {
-  await mongoose.connect(db_URL);
-}
-
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
@@ -40,10 +38,9 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
-
 const store = MongoStore.create({
   mongoUrl: db_URL,
-  
+
   crypto: {
     secret: process.env.SECRET,
   },
@@ -55,7 +52,7 @@ store.on("error", (err) => {
 });
 
 const sessionOption = {
-  store : store,
+  store: store,
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
@@ -66,7 +63,6 @@ const sessionOption = {
   },
 };
 
-
 app.use(session(sessionOption));
 app.use(flash());
 
@@ -75,8 +71,7 @@ app.use(passport.session());
 passport.use(new LocalStraregy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser()); 
-
+passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");

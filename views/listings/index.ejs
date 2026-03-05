@@ -1,266 +1,176 @@
 <% layout("/layouts/boilerplate") %>
-<body>
-  <style>
-    /*  Horizontal Scrolling Menu */
 
-    .filters {
-      white-space: nowrap;
-      overflow-x: auto;
-      background: #f0f0f0;
-      padding: 10px 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    .filter i{
-      font-size: 1.5rem;
-    }
-    .filter {
-      display: inline;
-      text-align: center;
-      padding: 10px 20px;
-      width: 200px;
-      margin: 0 10px;
-      font-size: 20px;
-      background: #fff;
-      box-shadow: 1 2px 5px rgba(0,0,0,0.1);
-      border-radius: 10px;
-    }
-    .filter.active {
-      background-color: #007bff;
-      color: white;
-    }
-    
-    .filters::-webkit-scrollbar {
-      display: none;
-    }
-    .filter:hover {
-      opacity: 1;
-      cursor: pointer;
-    }
-    .filter p {
-      font-size: 0.8rem;
-      color: #333;
-    }
-
-    .carousel-inner img{
-      width: 100%;
-      height: 20rem;
-      object-fit: cover;
-    }
-
-    .row {
-      display:flex;
-      flex-wrap: wrap;
-      gap: 0;
-    }
-  
-    .col {
-      flex: 1 1 calc(33.33% - 1rem); /* 3 columns on large screens */
-      box-sizing: border-box;
-    }
-  
-    @media (max-width: 768px) {
-      .col {
-        flex: 1 1 calc(50% - 1rem); /* 2 columns on medium screens */
-      }
-    }
-  
-    @media (max-width: 576px) {
-      .col {
-        flex: 1 1 100%; /* 1 column on small screens */
-      }
-    }
-  
-    .listing-card {
-      display: block;
-    }
-  
-    .listing-card img {
-      width: 100%;
-      height: 20rem;
-      object-fit: cover;
-    }
-    
-
-  </style>
-
-
-  <!-- Horizontal Scrolling Menu -->
-
-  
-  <div class="filters" id="filters">
-    <div class="filter" data-category="all">
-      <div><i class="fa-solid fa-fire"></i></div>
-      <p>All</p>
+<!-- Filter Section -->
+<div class="filters-container mb-4">
+  <div class="filters py-3" id="filters">
+    <div class="filter active" data-category="all">
+      <i class="fa-solid fa-fire"></i>
+      <span>Trending</span>
     </div>
-
     <div class="filter" data-category="Luxury">
-      <div><i class="fa-solid fa-gem"></i></div>
-      <p>Luxury Stays</p>
-    </div>
-    <div class="filter" data-category="Caves">
-      <div><i class="fa-solid fa-water"></i></div>
-      <p>Caves</p>
-    </div>
-    <div class="filter" data-category="Jungle">
-      <div><i class="fa-solid fa-tree"></i></div>
-      <p>Jungle Retreats</p>
-    </div>
-    <div class="filter" data-category="Desert">
-      <div><i class="fa-solid fa-sun"></i></div>
-      <p>Desert Adventures</p>
-    </div>
-    <div class="filter" data-category="Islands">
-      <div><i class="fa-solid fa-mountain"></i></div>
-      <p>Islands</p>
-    </div>
-    <div class="filter" data-category="Vineyards">
-      <div><i class="fa-solid fa-wine-bottle"></i></div>
-      <p>Vineyards</p>
-    </div>
-    <div class="filter" data-category="Treehouses">
-      <div><i class="fa-solid fa-warehouse"></i></div>
-      <p>Treehouses</p>
-    </div>
-    <div class="filter" data-category="Cabins">
-      <div><i class="fa-solid fa-house"></i></div>
-      <p>Cabins</p>
-    </div>
-    <div class="filter" data-category="Eco-Lodges">
-      <div><i class="fa-solid fa-leaf"></i></div>
-      <p>Eco-Lodges</p>
-    </div>
-    <div class="filter" data-category="apartment">
-      <div><i class="fa-solid fa-masks-theater"></i></div>
-      <p>Apartment</p>
+      <i class="fa-solid fa-gem"></i>
+      <span>Luxury</span>
     </div>
     <div class="filter" data-category="Beach">
-      <div><i class="fa-solid fa-umbrella-beach"></i></div>
-      <p>Beach</p>
-    </div>
-    <div class="filter" data-category="Historical">
-      <div><i class="fa-solid fa-landmark"></i></div>
-      <p>Historical Homes</p>
-    </div>
-    <div class="filter" data-category="Camping">
-      <div><i class="fa-solid fa-campground"></i></div>
-      <p>Camping</p>
-    </div>
-    <div class="filter" data-category="Domes">
-      <div><i class="fa-solid fa-igloo"></i></div>
-      <p>Domes</p>
-    </div>
-    <div class="filter" data-category="Boats">
-      <div><i class="fa-solid fa-sailboat"></i></div>
-      <p>Boats</p>
-    </div>
-    <div class="filter" data-category="Farms">
-      <div><i class="fa-solid fa-tractor"></i></div>
-      <p>Farms</p>
+      <i class="fa-solid fa-umbrella-beach"></i>
+      <span>Beachfront</span>
     </div>
     <div class="filter" data-category="Pools">
-      <div><i class="fa-solid fa-person-swimming"></i></div>
-      <p>Swimming Pools</p>
+      <i class="fa-solid fa-person-swimming"></i>
+      <span>Amazing Pools</span>
+    </div>
+    <div class="filter" data-category="Jungle">
+      <i class="fa-solid fa-tree"></i>
+      <span>Tropical</span>
+    </div>
+    <div class="filter" data-category="Historical">
+      <i class="fa-solid fa-landmark"></i>
+      <span>Historical</span>
+    </div>
+    <div class="filter" data-category="Mountains">
+      <i class="fa-solid fa-mountain"></i>
+      <span>Mountains</span>
+    </div>
+    <div class="filter" data-category="Camping">
+      <i class="fa-solid fa-campground"></i>
+      <span>Camping</span>
     </div>
     <div class="filter" data-category="Castles">
-      <div><i class="fa-solid fa-chess-rook"></i></div>
-      <p>Castles</p>
+      <i class="fa-solid fa-chess-rook"></i>
+      <span>Castles</span>
     </div>
     <div class="filter" data-category="Arctic">
-      <div><i class="fa-solid fa-snowflake"></i></div>
-      <p>Arctic</p>
+      <i class="fa-solid fa-snowflake"></i>
+      <span>Arctic</span>
     </div>
-    <div class="filter" data-category="Tiny-Homes">
-      <div><i class="fa-solid fa-house-chimney"></i></div>
-      <p>Tiny Homes</p>
-    </div>
-    
-    
   </div>
+</div>
 
-<!-- IMAGE SLIDER -->
-  <div
-      id="carouselExampleInterval"
-      class="carousel slide"
-      data-bs-ride="carousel"
-    >
-      <div class="carousel-inner">
-        <div class="carousel-item active" data-bs-interval="3000">
-          <img
-            src="https://images.unsplash.com/photo-1499591934245-40b55745b905?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            class="d-block w-100"
-            alt="..."
-          />
+<!-- Main Content -->
+<div class="row row-cols-xl-4 row-cols-lg-3 row-cols-md-2 row-cols-1 g-4">
+  <% for(let listing of allListings){ %>
+    <div class="col listing-col" data-category="<%= listing.category %>">
+      <a href="/listings/<%= listing._id %>" class="text-decoration-none">
+        <div class="card listing-card h-100 border-0">
+          <div class="position-relative overflow-hidden" style="border-radius: var(--radius);">
+            <img
+              src="<%= listing.image.url %>"
+              class="card-img-top"
+              alt="<%= listing.title %>"
+              loading="lazy"
+            />
+            <div class="card-img-overlay d-flex align-items-start justify-content-end p-3">
+              <button class="btn btn-light btn-sm rounded-circle shadow-sm" style="width: 32px; height: 32px; padding: 0;">
+                <i class="fa-regular fa-heart"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="card-body px-1 py-3">
+            <div class="d-flex justify-content-between align-items-start">
+              <h5 class="card-title text-truncate mb-0" style="max-width: 80%;"><%= listing.title %></h5>
+              <div class="d-flex align-items-center small fw-bold">
+                <i class="fa-solid fa-star text-warning me-1" style="font-size: 0.8rem;"></i>
+                <span>New</span>
+              </div>
+            </div>
+            <p class="card-text text-muted mb-1 small">
+              <%= listing.location %>, <%= listing.country %>
+            </p>
+            <div class="mt-2 d-flex align-items-center">
+              <span class="fw-bold text-dark">$<%= Math.floor(Math.random() * (500 - 50 + 1)) + 50 %></span>
+              <span class="text-muted small ms-1">/ night</span>
+            </div>
+          </div>
         </div>
-        <div class="carousel-item" data-bs-interval="3000">
-          <img
-            src="https://plus.unsplash.com/premium_photo-1664304598312-6de674eb1b79?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            class="d-block w-100"
-            alt="..."
-          />
-        </div>
-        <div class="carousel-item" data-bs-interval="3000">
-          <img
-            src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1121&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            class="d-block w-100"
-            alt="..."
-          />
-        </div>
-        <div class="carousel-item" data-bs-interval="3000">
-          <img
-            src="https://images.unsplash.com/photo-1419133126304-d17b34c34d76?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            class="d-block w-100"
-            alt="..."
-          />
-        </div>
-        <div class="carousel-item" data-bs-interval="3000">
-          <img
-            src="https://images.unsplash.com/photo-1501966077470-d1ebf6cd871a?q=80&w=1031&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            class="d-block w-100"
-            alt="..."
-          />
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+      </a>
     </div>
+  <% } %>
+</div>
 
-    
+<style>
+  .filters-container {
+    position: sticky;
+    top: 4.5rem;
+    z-index: 10;
+    background: var(--bg-main);
+    border-bottom: 1px solid #e2e8f0;
+    margin: 0 -1.5rem;
+    padding: 0 1.5rem;
+  }
 
-  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
-    <% for(let listing of allListings){ %>
-    <a href="/listings/<%= listing._id%>" class="listing-link">
-      <div class="card listing-card col" data-category="<%= listing.category%>">
-        <img
-          src="<%= listing.image.url %>"
-          class="card-img-top"
-          alt="listing_image"
-          style="height: 20rem"
-        />
+  .filters {
+    display: flex;
+    overflow-x: auto;
+    gap: 2rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
 
-        <div class="card-img-overlay"></div>
+  .filters::-webkit-scrollbar {
+    display: none;
+  }
 
-        <div class="card-body ms-3">
-          <p class="card-text">
-            <b><%=listing.title %></b> <br />
-            <p><%= listing.location %>,<%= listing.country %></p>
-            <p> Category :<%= listing.category %></p>
-            <p><i class="fa-solid fa-signs-post"><%= listing.owner.username %></i></p>
-          </p>
-        </div>
-      </div>
-    </a>
-    <% } %>
-  </div>
+  .filter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: fit-content;
+    opacity: 0.7;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 0.5rem;
+  }
 
-  <script src="../../public/js/script.js"></script>
-</body>
+  .filter i {
+    font-size: 1.4rem;
+  }
+
+  .filter span {
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .filter:hover, .filter.active {
+    opacity: 1;
+    color: var(--primary);
+  }
+
+  .filter.active {
+    border-bottom-color: var(--primary);
+  }
+
+  .listing-col {
+    transition: all 0.3s ease;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filters = document.querySelectorAll('.filter');
+    const items = document.querySelectorAll('.listing-col');
+
+    filters.forEach(filter => {
+      filter.addEventListener('click', () => {
+        // Update active class
+        filters.forEach(f => f.classList.remove('active'));
+        filter.classList.add('active');
+
+        const category = filter.getAttribute('data-category');
+
+        items.forEach(item => {
+          if (category === 'all' || item.getAttribute('data-category') === category) {
+            item.style.display = 'block';
+            setTimeout(() => item.style.opacity = '1', 10);
+          } else {
+            item.style.opacity = '0';
+            setTimeout(() => item.style.display = 'none', 300);
+          }
+        });
+      });
+    });
+  });
+</script>

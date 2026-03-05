@@ -1,8 +1,13 @@
 <% layout("/layouts/boilerplate") %>
-<div class="container mt-3">
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-10 col-lg-8">
-      <h2 class="fw-bold">Add Your Favorite Place</h2>
+
+<div class="row mt-4 mb-5 fade-in">
+  <div class="col-lg-8 offset-lg-2">
+    <div class="card shadow-sm border-0 p-4 p-md-5" style="border-radius: var(--radius);">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold text-primary">Host your stay</h2>
+        <p class="text-muted">Share your wonderful place with travelers from around the world</p>
+      </div>
+
       <form
         method="POST"
         action="/listings"
@@ -10,115 +15,103 @@
         novalidate
         enctype="multipart/form-data"
       >
-        <div class="mb-3">
-          <label for="title" class="form-label">Title</label>
+        <div class="mb-4">
+          <label for="title" class="form-label small fw-bold text-uppercase">Listing Title</label>
           <input
             name="listing[title]"
-            placeholder="Enter title"
+            id="title"
+            placeholder="e.g. Cozy Beachfront Villa"
             type="text"
-            class="form-control"
+            class="form-control form-control-lg bg-light border-0 shadow-none"
             required
           />
-          <div class="valid-feedback">Title looks good!</div>
+          <div class="invalid-feedback">Please provide a catchy title.</div>
         </div>
-        <div class="mb-3">
-          <label for="description" class="form-label">Description</label>
+
+        <div class="mb-4">
+          <label for="description" class="form-label small fw-bold text-uppercase">Description</label>
           <textarea
             name="listing[description]"
-            class="form-control"
+            id="description"
+            class="form-control bg-light border-0 shadow-none"
+            placeholder="Tell us what makes your place special..."
+            rows="5"
             required
           ></textarea>
-          <div class="invalid-feedback">Please Enter short description!</div>
+          <div class="invalid-feedback">A brief description helps guests find you.</div>
         </div>
-        <div class="mb-3">
-          <label for="image" class="form-label">Upload Listing Image</label>
-          <input
-            name="listing[image]"
-            class="form-control"
-            type="file"
-            required
-          />
-          <small class="form-text text-muted">Upload images in .jpg or .png format (max size: 2MB).</small>
 
-          <div class="invalid-feedback">Please enter a valid Image-Link!</div>
+        <div class="mb-4">
+          <label for="image" class="form-label small fw-bold text-uppercase">Property Photo</label>
+          <div class="input-group">
+            <input
+              name="listing[image]"
+              id="image"
+              class="form-control bg-light border-0 shadow-none p-3"
+              type="file"
+              required
+            />
+          </div>
+          <p class="text-muted small mt-2"><i class="fa-solid fa-circle-info me-1"></i>High-quality photos increase your chances of booking.</p>
+          <div class="invalid-feedback">Please upload a property photo.</div>
         </div>
+
         <div class="row">
-          <div class="mb-3 col-md-4">
-            <label for="location" class="form-label">Location</label>
+          <div class="mb-4 col-md-6">
+            <label for="location" class="form-label small fw-bold text-uppercase">Location</label>
             <input
               name="listing[location]"
-              placeholder="Enter location"
+              id="location"
+              placeholder="e.g. Malibu, California"
               type="text"
-              class="form-control"
+              class="form-control bg-light border-0 shadow-none"
               required
             />
-            <div class="invalid-feedback">Location should be valid!</div>
+            <div class="invalid-feedback">Where is this beautiful place?</div>
           </div>
 
-          <div class="mb-3 col-md-8">
-            <label for="country" class="form-label">Country</label>
+          <div class="mb-4 col-md-6">
+            <label for="country" class="form-label small fw-bold text-uppercase">Country</label>
             <input
               name="listing[country]"
-              placeholder="country name"
+              id="country"
+              placeholder="e.g. United States"
               type="text"
-              class="form-control"
+              class="form-control bg-light border-0 shadow-none"
               required
             />
-            <div class="invalid-feedback">Country name should be valid!</div>
+            <div class="invalid-feedback">Please specify the country.</div>
           </div>
         </div>
-        <div class="mb-3">
-          <label for="category" class="form-label">Category</label>
+
+        <div class="mb-5">
+          <label for="category" class="form-label small fw-bold text-uppercase">Category</label>
           <select
             name="listing[category]"
             id="category"
-            class="form-control"
+            class="form-select bg-light border-0 shadow-none"
             required
-            onchange="toggleOtherCategory()"
           >
-            <option value="" disabled selected>Select a Category</option>
+            <option value="" disabled selected>Select an atmosphere</option>
             <option value="Luxury">Luxury Stays</option>
-            <option value="Caves">Caves</option>
-            <option value="Jungle">Jungle Retreats</option>
-            <option value="Desert">Desert Adventures</option>
-            <option value="Islands">Islands</option>
-            <option value="Vineyards">Vineyards</option>
-            <option value="Treehouses">Treehouses</option>
-            <option value="Cabins">Cabins</option>
-            <option value="Eco-Lodges">Eco-Lodges</option>
-            <option value="Apartment">Apartment</option>
-            <option value="Beach">Beach</option>
+            <option value="Beach">Beachfront</option>
+            <option value="Pools">Amazing Pools</option>
+            <option value="Jungle">Tropical/Jungle</option>
+            <option value="Mountains">Mountains</option>
             <option value="Historical">Historical Homes</option>
             <option value="Camping">Camping</option>
-            <option value="Domes">Domes</option>
-            <option value="Boats">Boats</option>
-            <option value="Farms">Farms</option>
-            <option value="Pools">Swimming Pools</option>
-            <option value="Castles">Castles</option>
-            <option value="Arctic">Arctic</option>
-            <option value="Tiny-Homes">Tiny Homes</option>
+            <option value="Cabins">Cabins</option>
+            <option value="Apartment">Modern Apartment</option>
+            <option value="Arctic">Arctic/Snow</option>
             <option value="Other">Other</option>
           </select>
-          <div class="invalid-feedback">
-            Select the category of this location.
-          </div>
+          <div class="invalid-feedback">Helping guests find the right vibe.</div>
         </div>
 
-        <div class="mb-3" id="otherCategoryInput" style="display: none">
-          <label for="other-category" class="form-label"
-            >Specify Other Category</label
-          >
-          <input
-            type="text"
-            name="listing[other-category]"
-            id="other-category"
-            class="form-control"
-            placeholder="Enter your category"
-          />
+        <div class="d-grid gap-2 col-md-8 mx-auto">
+          <button class="btn btn-primary-custom btn-lg py-3 shadow-sm">Create Listing</button>
+          <a href="/listings" class="btn btn-link text-muted text-decoration-none small">Cancel and go back</a>
         </div>
-
-        <button class="btn m-3 btn-dark col-12 col-md-8 col-lg-6 add-btn">Add</button>
-        <br />
       </form>
     </div>
   </div>

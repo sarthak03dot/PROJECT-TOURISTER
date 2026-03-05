@@ -1,14 +1,28 @@
-<footer>
-    <div class="f-info">
-        <div class="f-info-socials">
-            <i class="fa-brands fa-square-facebook"></i>
-            <i class="fa-brands fa-square-instagram"></i>
-            <i class="fa-brands fa-linkedin"></i>
+<footer class="mt-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-4 text-center text-md-start mb-4 mb-md-0">
+        <a class="navbar-brand text-secondary text-decoration-none fw-bold" href="/listings">
+          <i class="fa-solid fa-earth-americas me-2"></i>TripTales
+        </a>
+        <p class="text-muted small mt-2">&copy; <%= new Date().getFullYear() %> TripTales. All rights reserved.</p>
+      </div>
+      
+      <div class="col-md-4 text-center mb-4 mb-md-0">
+        <div class="f-info-socials d-flex justify-content-center gap-3">
+          <a href="#"><i class="fa-brands fa-square-facebook"></i></a>
+          <a href="#"><i class="fa-brands fa-square-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin"></i></a>
         </div>
-        <div class="f-info-brand">&copy;TripTales. All right Reserved.</div>
-        <div class="f-info-links">
-            <a href="/privacy">Privacy</a>
-            <a href="/terms">Terms</a>
+      </div>
+
+      <div class="col-md-4 text-center text-md-end">
+        <div class="f-info-links d-flex justify-content-center justify-content-md-end gap-3 small">
+          <a href="/privacy" class="text-muted text-decoration-none">Privacy</a>
+          <a href="/terms" class="text-muted text-decoration-none">Terms</a>
+          <a href="/contact" class="text-muted text-decoration-none">Contact</a>
         </div>
+      </div>
     </div>
+  </div>
 </footer>
