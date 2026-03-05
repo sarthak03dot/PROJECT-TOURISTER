@@ -79,7 +79,7 @@
 
       <div class="col-md-4">
         <div class="card shadow-lg border-0 p-4 sticky-top" style="top: 6rem; border-radius: var(--radius); z-index: 5;">
-          <h4 class="fw-bold mb-3">$<%= Math.floor(Math.random() * 450) + 50 %> <span class="text-muted fs-6 fw-normal">/ night</span></h4>
+          <h4 class="fw-bold mb-3">$<%= listing.price.toLocaleString("en-IN") %> <span class="text-muted fs-6 fw-normal">/ night</span></h4>
           
           <form action="/listings/<%= listing._id %>/bookings" method="POST">
             <div class="border rounded-3 mb-3 overflow-hidden">

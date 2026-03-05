@@ -25,4 +25,7 @@ router
 
 router.get("/signout", userController.SignOut);
 
+const { isSignedIn } = require("../middleware.js");
+router.post("/wishlist/:id", isSignedIn, wrapAsync(userController.toggleWishlist));
+
 module.exports = router;

@@ -1,51 +1,59 @@
 <% layout("/layouts/boilerplate") %>
 
-<!-- Filter Section -->
-<div id="filters" class="d-flex align-items-center mb-4 pb-2 px-1 gap-4 overflow-x-auto text-nowrap hide-scrollbar">
-    <a href="/listings" class="filter text-decoration-none d-block text-center <%= !selectedCategory ? 'active' : '' %>" style="min-width: 60px;">
-        <i class="fa-solid fa-house d-block mb-1 fs-5"></i>
-        <span class="small fw-semibold">All</span>
-    </a>
-    <a href="/listings/search?category=Luxury" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Luxury' ? 'active' : '' %>">
-        <i class="fa-solid fa-crown d-block mb-1 fs-5"></i>
-        <span class="small fw-semibold">Luxury</span>
-    </a>
-    <a href="/listings/search?category=Beach" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Beach' ? 'active' : '' %>">
-        <i class="fa-solid fa-umbrella-beach d-block mb-1 fs-5"></i>
-        <span class="small fw-semibold">Beach</span>
-    </a>
-    <a href="/listings/search?category=Pools" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Pools' ? 'active' : '' %>">
-        <i class="fa-solid fa-person-swimming d-block mb-1 fs-5"></i>
-        <span class="small fw-semibold">Pools</span>
-    </a>
-    <a href="/listings/search?category=Jungle" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Jungle' ? 'active' : '' %>">
-        <i class="fa-solid fa-tree d-block mb-1 fs-5"></i>
-        <span class="small fw-semibold">Jungle</span>
-    </a>
-    <a href="/listings/search?category=Mountains" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Mountains' ? 'active' : '' %>">
-        <i class="fa-solid fa-mountain d-block mb-1 fs-5"></i>
-        <span class="small fw-semibold">Mountains</span>
-    </a>
-    <a href="/listings/search?category=Historical" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Historical' ? 'active' : '' %>">
-        <i class="fa-solid fa-building-columns d-block mb-1 fs-5"></i>
-        <span class="small fw-semibold">Historical</span>
-    </a>
-    <a href="/listings/search?category=Camping" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Camping' ? 'active' : '' %>">
-        <i class="fa-solid fa-tent d-block mb-1 fs-5"></i>
-        <span class="small fw-semibold">Camping</span>
-    </a>
-    <a href="/listings/search?category=Cabins" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Cabins' ? 'active' : '' %>">
-        <i class="fa-solid fa-house-chimney d-block mb-1 fs-5"></i>
-        <span class="small fw-semibold">Cabins</span>
-    </a>
-    <a href="/listings/search?category=Apartment" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Apartment' ? 'active' : '' %>">
-        <i class="fa-solid fa-building d-block mb-1 fs-5"></i>
-        <span class="small fw-semibold">Apartment</span>
-    </a>
-    <a href="/listings/search?category=Arctic" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Arctic' ? 'active' : '' %>">
-        <i class="fa-solid fa-snowflake d-block mb-1 fs-5"></i>
-        <span class="small fw-semibold">Arctic</span>
-    </a>
+<div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-3">
+    <div id="filters" class="d-flex align-items-center pb-2 px-1 gap-4 overflow-x-auto text-nowrap hide-scrollbar flex-grow-1" style="max-width: 80%;">
+        <a href="/listings" class="filter text-decoration-none d-block text-center <%= !selectedCategory ? 'active' : '' %>" style="min-width: 60px;">
+            <i class="fa-solid fa-house d-block mb-1 fs-5"></i>
+            <span class="small fw-semibold">All</span>
+        </a>
+        <a href="/listings/search?category=Luxury" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Luxury' ? 'active' : '' %>">
+            <i class="fa-solid fa-crown d-block mb-1 fs-5"></i>
+            <span class="small fw-semibold">Luxury</span>
+        </a>
+        <a href="/listings/search?category=Beach" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Beach' ? 'active' : '' %>">
+            <i class="fa-solid fa-umbrella-beach d-block mb-1 fs-5"></i>
+            <span class="small fw-semibold">Beach</span>
+        </a>
+        <a href="/listings/search?category=Pools" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Pools' ? 'active' : '' %>">
+            <i class="fa-solid fa-person-swimming d-block mb-1 fs-5"></i>
+            <span class="small fw-semibold">Pools</span>
+        </a>
+        <a href="/listings/search?category=Jungle" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Jungle' ? 'active' : '' %>">
+            <i class="fa-solid fa-tree d-block mb-1 fs-5"></i>
+            <span class="small fw-semibold">Jungle</span>
+        </a>
+        <a href="/listings/search?category=Mountains" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Mountains' ? 'active' : '' %>">
+            <i class="fa-solid fa-mountain d-block mb-1 fs-5"></i>
+            <span class="small fw-semibold">Mountains</span>
+        </a>
+        <a href="/listings/search?category=Historical" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Historical' ? 'active' : '' %>">
+            <i class="fa-solid fa-building-columns d-block mb-1 fs-5"></i>
+            <span class="small fw-semibold">Historical</span>
+        </a>
+        <a href="/listings/search?category=Camping" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Camping' ? 'active' : '' %>">
+            <i class="fa-solid fa-tent d-block mb-1 fs-5"></i>
+            <span class="small fw-semibold">Camping</span>
+        </a>
+        <a href="/listings/search?category=Cabins" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Cabins' ? 'active' : '' %>">
+            <i class="fa-solid fa-house-chimney d-block mb-1 fs-5"></i>
+            <span class="small fw-semibold">Cabins</span>
+        </a>
+        <a href="/listings/search?category=Apartment" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Apartment' ? 'active' : '' %>">
+            <i class="fa-solid fa-building d-block mb-1 fs-5"></i>
+            <span class="small fw-semibold">Apartment</span>
+        </a>
+        <a href="/listings/search?category=Arctic" class="filter text-decoration-none d-block text-center <%= selectedCategory === 'Arctic' ? 'active' : '' %>">
+            <i class="fa-solid fa-snowflake d-block mb-1 fs-5"></i>
+            <span class="small fw-semibold">Arctic</span>
+        </a>
+    </div>
+
+    <div class="tax-toggle border p-3 rounded-4 shadow-sm d-flex align-items-center bg-white">
+        <div class="form-check form-switch form-check-reverse m-0 p-0 d-flex align-items-center gap-2">
+            <label class="form-check-label fw-semibold small cursor-pointer" for="taxToggle" style="white-space: nowrap;">Display total after taxes</label>
+            <input class="form-check-input mt-0 cursor-pointer shadow-none" type="checkbox" role="switch" id="taxToggle" style="width: 2.5rem; height: 1.25rem;">
+        </div>
+    </div>
 </div>
 
 <!-- Main Content -->
@@ -62,8 +70,13 @@
               loading="lazy"
             />
             <div class="card-img-overlay d-flex align-items-start justify-content-end p-3">
-              <button class="btn btn-light btn-sm rounded-circle shadow-sm" style="width: 32px; height: 32px; padding: 0;">
-                <i class="fa-regular fa-heart"></i>
+              <button 
+                class="btn btn-light btn-sm rounded-circle shadow-sm wishlist-btn" 
+                data-id="<%= listing._id %>"
+                style="width: 32px; height: 32px; padding: 0;"
+                onclick="toggleWishlist(event, '<%= listing._id %>')"
+              >
+                <i class="<%= (currUser && currUser.wishlist && currUser.wishlist.includes(listing._id)) ? 'fa-solid text-danger' : 'fa-regular' %> fa-heart"></i>
               </button>
             </div>
           </div>
@@ -80,8 +93,8 @@
               <%= listing.location %>, <%= listing.country %>
             </p>
             <div class="mt-2 d-flex align-items-center">
-              <span class="fw-bold text-dark">$<%= Math.floor(Math.random() * (500 - 50 + 1)) + 50 %></span>
-              <span class="text-muted small ms-1">/ night</span>
+              <span class="fw-bold text-dark base-price">$<%= listing.price.toLocaleString("en-IN") %> <span class="text-muted small fw-normal">/ night</span></span>
+              <span class="fw-bold text-dark tax-price d-none">$<%= (listing.price * 1.18).toLocaleString("en-IN") %> <span class="text-muted small fw-normal">total after taxes</span></span>
             </div>
           </div>
         </div>
@@ -151,28 +164,57 @@
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const filters = document.querySelectorAll('.filter');
-    const items = document.querySelectorAll('.listing-col');
+    async function toggleWishlist(event, id) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        try {
+            const response = await fetch(`/wishlist/${id}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            
+            if (response.status === 401 || response.url.includes('/signin')) {
+                window.location.href = '/signin';
+                return;
+            }
+            
+            const data = await response.json();
+            if (data.success) {
+                const btn = event.currentTarget;
+                const icon = btn.querySelector('i');
+                if (data.added) {
+                    icon.classList.remove('fa-regular');
+                    icon.classList.add('fa-solid', 'text-danger');
+                    // Add a little pop animation
+                    icon.style.transform = 'scale(1.3)';
+                    setTimeout(() => icon.style.transform = 'scale(1)', 200);
+                } else {
+                    icon.classList.remove('fa-solid', 'text-danger');
+                    icon.classList.add('fa-regular');
+                }
+            }
+        } catch (err) {
+            console.error('Wishlist error:', err);
+        }
+    }
 
-    filters.forEach(filter => {
-      filter.addEventListener('click', () => {
-        // Update active class
-        filters.forEach(f => f.classList.remove('active'));
-        filter.classList.add('active');
-
-        const category = filter.getAttribute('data-category');
-
-        items.forEach(item => {
-          if (category === 'all' || item.getAttribute('data-category') === category) {
-            item.style.display = 'block';
-            setTimeout(() => item.style.opacity = '1', 10);
-          } else {
-            item.style.opacity = '0';
-            setTimeout(() => item.style.display = 'none', 300);
-          }
+    // Tax Toggle Logic
+    const taxToggle = document.getElementById('taxToggle');
+    taxToggle.addEventListener('change', () => {
+        const basePrices = document.querySelectorAll('.base-price');
+        const taxPrices = document.querySelectorAll('.tax-price');
+        
+        basePrices.forEach(el => {
+            el.classList.toggle('d-none');
         });
-      });
+        taxPrices.forEach(el => {
+            el.classList.toggle('d-none');
+            if (!el.classList.contains('d-none')) {
+                el.classList.add('fade-in');
+            }
+        });
     });
-  });
 </script>
+
+<!-- Client-side script removed in favor of server-side filtering -->

@@ -12,8 +12,7 @@ module.exports.createBooking = async (req, res) => {
             return res.redirect("/listings");
         }
 
-        // Simple price calculation (could be more advanced based on actual stay duration)
-        const nightPrice = 150; // Dynamic price per night would be better
+        const nightPrice = listing.price || 150; 
         const diffTime = Math.abs(new Date(checkOut) - new Date(checkIn));
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         const totalPrice = (diffDays || 1) * nightPrice;
@@ -37,7 +36,19 @@ module.exports.createBooking = async (req, res) => {
 };
 
 module.exports.userDashboard = async (req, res) => {
+    // Refresh user to get latest wishlist
+    const user = await require("../models/user").findById(req.user._id).populate("wishlist");
+    
+    // Bookings I made (as a traveler)
     const bookings = await Booking.find({ guest: req.user._id }).populate("listing");
+    
+    // My listings (as a host)
     const listings = await Listing.find({ owner: req.user._id });
-    res.render("users/dashboard.ejs", { bookings, listings });
+    
+    // Bookings people made for my listings (as a host)
+    const incomingBookings = await Booking.find({ 
+        listing: { $in: listings.map(l => l._id) } 
+    }).populate("listing").populate("guest");
+
+    res.render("users/dashboard.ejs", { bookings, listings, incomingBookings, wishlist: user.wishlist });
 };

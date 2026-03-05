@@ -42,6 +42,19 @@
         </div>
 
         <div class="mb-4">
+          <label for="price" class="form-label small fw-bold text-uppercase">Price per night ($)</label>
+          <input
+            name="listing[price]"
+            id="price"
+            placeholder="e.g. 150"
+            type="number"
+            class="form-control bg-light border-0 shadow-none"
+            required
+          />
+          <div class="invalid-feedback">Please enter a valid price.</div>
+        </div>
+
+        <div class="mb-4">
           <label for="image" class="form-label small fw-bold text-uppercase">Property Photo</label>
           <div class="input-group">
             <input

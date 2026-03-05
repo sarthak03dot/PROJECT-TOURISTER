@@ -39,6 +39,12 @@
           ><%= listing.description %></textarea>
         </div>
 
+        <div class="mb-3">
+          <label for="price" class="form-label small fw-bold">Price per night ($)</label>
+          <input name="listing[price]" value="<%= listing.price %>" type="number" class="form-control border-0 shadow-sm" id="price" required />
+          <div class="invalid-feedback">Please enter a valid price.</div>
+        </div>
+
         <div class="row mb-4 align-items-center">
           <div class="col-md-4">
             <label class="form-label small fw-bold text-uppercase">Current Image</label>
