@@ -3,13 +3,12 @@ const mongoose = require("mongoose");
 const initdata = require("./data.js");
 const Listing = require("../models/listing.js");
 const DB_URL = process.env.ATLASDB_URL;
-const M_URL = process.env.M_URL; 
 
 
 // Remove standalone main() call at top level
 
 async function main() {
-  await mongoose.connect(DB_URL || "mongodb://127.0.0.1:27017/TripTales");
+  await mongoose.connect(DB_URL);
 }
 
 
@@ -18,7 +17,7 @@ async function main() {
 const initDB = async()=>{
     try {
         await Listing.deleteMany({});
-        initdata.data = initdata.data.map((obj) => ({ ...obj, owner:'69a9bf75b2b534ed2e36d92c'}));
+        initdata.data = initdata.data.map((obj) => ({ ...obj, owner:'69ad62965fddf3bd11294d7c'}));
         await Listing.insertMany(initdata.data);
         console.log("data was initialized");
     } catch (err) {

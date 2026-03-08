@@ -17,19 +17,46 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 const userRouter = require("./routes/user.js");
+const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
 const db_URL = process.env.ATLASDB_URL;
 const url = process.env.M_URL;
 
-async function main() {
-  await mongoose.connect(db_URL);
-}
-main()
-  .then(() => {
-    console.log("Connected to DB");
+// Helmet with relaxed CSP for EJS-Mate/Bootstrap/FontAwesome
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
   })
-  .catch((err) => {
-    console.log(err);
-  });
+);
+app.use(mongoSanitize());
+
+async function main() {
+  const maxRetries = 5;
+  let retryCount = 0;
+
+  const connectWithRetry = async () => {
+    try {
+      await mongoose.connect(db_URL, {
+        serverSelectionTimeoutMS: 5000,
+        connectTimeoutMS: 10000,
+        socketTimeoutMS: 45000,
+      });
+      console.log("Connected to DB");
+    } catch (err) {
+      console.error(`Failed to connect to DB (attempt ${retryCount + 1}/${maxRetries}):`, err.message);
+      retryCount++;
+      if (retryCount < maxRetries) {
+        console.log(`Retrying in 5 seconds...`);
+        setTimeout(connectWithRetry, 5000);
+      } else {
+        console.error("Max retries reached. Could not connect to DB. Check your network or Atlas IP whitelist.");
+      }
+    }
+  };
+
+  connectWithRetry();
+}
+main();
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -38,13 +65,12 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
+const sessionSecret = process.env.SECRET || "thisshouldbeabettersecret";
+
 const store = MongoStore.create({
   mongoUrl: db_URL,
-
-  crypto: {
-    secret: process.env.SECRET,
-  },
-  touchAfter: 24 * 60 * 60, // 1 day
+  touchAfter: 24 * 60 * 60,
+  collectionName: "sessions_v3", // Fresh start without crypto complexity
 });
 
 store.on("error", (err) => {
@@ -53,11 +79,11 @@ store.on("error", (err) => {
 
 const sessionOption = {
   store: store,
-  secret: process.env.SECRET,
+  secret: sessionSecret,
   resave: false,
   saveUninitialized: true,
   cookie: {
-    expires: Date.now() + 1000 * 60 * 60 * 24 * 7, //milisec , sec, min, hr, day
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7,
     httpOnly: true,
   },
@@ -81,7 +107,8 @@ const { isSignedIn } = require("./middleware.js");
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
-  res.locals.currUser = req.user;
+  res.locals.currUser = req.user || null;
+  console.log("Auth State:", req.isAuthenticated() ? `User: ${req.user.username}` : "Guest");
   res.locals.mapToken = process.env.MAP_TOKEN;
   res.locals.selectedCategory = null;
   next();

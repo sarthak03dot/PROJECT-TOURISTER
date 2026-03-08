@@ -1,27 +1,68 @@
-<footer class="mt-5">
+<footer class="footer mt-auto py-5 border-top">
   <div class="container">
-    <div class="row align-items-center">
-      <div class="col-md-4 text-center text-md-start mb-4 mb-md-0">
-        <a class="navbar-brand text-secondary text-decoration-none fw-bold" href="/listings">
-          <i class="fa-solid fa-earth-americas me-2"></i>TripTales
-        </a>
-        <p class="text-muted small mt-2">&copy; <%= new Date().getFullYear() %> TripTales. All rights reserved.</p>
-      </div>
-      
-      <div class="col-md-4 text-center mb-4 mb-md-0">
-        <div class="f-info-socials d-flex justify-content-center gap-3">
-          <a href="#"><i class="fa-brands fa-square-facebook"></i></a>
-          <a href="#"><i class="fa-brands fa-square-instagram"></i></a>
-          <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+    <div class="row g-4">
+      <!-- Column 1: Brand & Bio -->
+      <div class="col-lg-3 col-md-6">
+        <div class="footer-brand d-flex align-items-center mb-3">
+          <div class="brand-icon small me-2">
+            <i class="fa-solid fa-earth-americas"></i>
+          </div>
+          <span class="brand-text fs-5">TripTales</span>
+        </div>
+        <p class="text-muted small mb-4">
+          Discover unique stays and premium travel experiences around the world. Your next adventure starts here.
+        </p>
+        <div class="footer-socials d-flex gap-2">
+          <a href="#" class="social-btn" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="social-btn" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social-btn" title="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" class="social-btn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
         </div>
       </div>
 
-      <div class="col-md-4 text-center text-md-end">
-        <div class="f-info-links d-flex justify-content-center justify-content-md-end gap-3 small">
-          <a href="/privacy" class="text-muted text-decoration-none">Privacy</a>
-          <a href="/terms" class="text-muted text-decoration-none">Terms</a>
-          <a href="/contact" class="text-muted text-decoration-none">Contact</a>
-        </div>
+      <!-- Column 2: Explore -->
+      <div class="col-lg-2 col-md-6 ps-lg-4">
+        <h6 class="footer-heading mb-3">Explore</h6>
+        <ul class="list-unstyled footer-nav">
+          <li><a href="/listings">Browse All</a></li>
+          <li><a href="/listings?category=trending">Trending</a></li>
+          <li><a href="/listings?category=new">New Stays</a></li>
+          <li><a href="/listings?category=popular">Popular</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Support -->
+      <div class="col-lg-2 col-md-6">
+        <h6 class="footer-heading mb-3">Support</h6>
+        <ul class="list-unstyled footer-nav">
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Safety Guides</a></li>
+          <li><a href="#">Cancellation</a></li>
+          <li><a href="#">Terms & Privacy</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Newsletter -->
+      <div class="col-lg-5 col-md-6">
+        <h6 class="footer-heading mb-3">Stay in the Loop</h6>
+        <p class="text-muted small mb-3">Subscribe for exclusive travel deals and inspiration.</p>
+        <form class="newsletter-form-modern" onsubmit="event.preventDefault(); showToast('Subscribed successfully!')">
+          <div class="input-modern">
+            <input type="email" placeholder="Email Address" required>
+            <button type="submit">Join</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-bottom mt-5 pt-4 border-top d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+      <div class="copyright text-muted small">
+        &copy; <%= new Date().getFullYear() %> TripTales. Crafted with ❤️ for travelers.
+      </div>
+      <div class="footer-legal-links d-flex gap-4 small">
+        <a href="/privacy" class="text-muted text-decoration-none">Privacy</a>
+        <a href="/terms" class="text-muted text-decoration-none">Terms</a>
+        <a href="/sitemap" class="text-muted text-decoration-none">Sitemap</a>
       </div>
     </div>
   </div>

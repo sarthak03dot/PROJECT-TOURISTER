@@ -30,7 +30,9 @@ module.exports.signup = async (req, res) => {
 module.exports.SignIn =  async (req, res) => {
     req.flash("success", "Welcome to TripTales! You're Logged in.");
     let redirectUrl = res.locals.redirectUrl || "/listings";
-    res.redirect(redirectUrl);
+    req.session.save(() => {
+        res.redirect(redirectUrl);
+    });
   };
 
   module.exports.SignOut = (req, res, next) => {

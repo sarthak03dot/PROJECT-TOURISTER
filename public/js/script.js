@@ -84,6 +84,41 @@ function toggleOtherCategory() {
 }
 
 
+// Theme Toggle Logic
+function initTheme() {
+    const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-bs-theme', theme);
+    updateThemeIcon(theme);
+}
+
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-bs-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateThemeIcon(newTheme);
+}
+
+function updateThemeIcon(theme) {
+    const icons = document.querySelectorAll('.theme-toggle i');
+    icons.forEach(icon => {
+        icon.className = theme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
+    
+    const themeBtn = document.querySelectorAll('.theme-toggle');
+    themeBtn.forEach(btn => {
+        btn.addEventListener('click', toggleTheme);
+    });
+
+    const filters = document.querySelectorAll('.filter');
+    const listingCols = document.querySelectorAll('.listing-col');
+    // ... rest of filtering logic
+});
+
 // Improved Filtering
 document.addEventListener('DOMContentLoaded', () => {
     const filters = document.querySelectorAll('.filter');

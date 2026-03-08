@@ -1,15 +1,15 @@
-<% if(success && success.length) {%>
+<% if(locals.success && locals.success.length) {%>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      showToast("<%= success %>", "success");
+      showToast("<%= locals.success %>", "success");
     });
   </script>
 <% } %>
 
-<% if(error && error.length) {%>
+<% if(locals.error && locals.error.length) {%>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      showToast("<%= error %>", "error");
+      showToast("<%= locals.error %>", "error");
     });
   </script>
 <% } %>

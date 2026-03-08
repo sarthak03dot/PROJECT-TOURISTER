@@ -1,60 +1,132 @@
-<nav class="navbar navbar-expand-md sticky-top">
-  <div class="container">
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container py-2">
+    <!-- Navbar Brand -->
     <a class="navbar-brand d-flex align-items-center" href="/listings">
-      <i class="fa-solid fa-earth-americas me-2"></i>
-      <span>TripTales</span>
+      <div class="brand-icon me-2">
+        <i class="fa-solid fa-earth-americas"></i>
+      </div>
+      <span class="brand-text">TripTales</span>
     </a>
     
-    <button
-      class="navbar-toggler border-0"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"  
-      aria-controls="navbarNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    
-    <div class="collapse navbar-collapse" id="navbarNav"> 
-      <div class="navbar-nav mx-auto">
-        <form class="d-flex mx-auto search-form" role="search" action="/listings/search" method="GET">
-        <div class="search-input-wrapper position-relative">
-          <input class="form-control me-2 ps-4 rounded-pill border-0 shadow-sm" name="query" type="search" placeholder="Search destinations..." aria-label="Search" style="width: 350px;">
-          <button class="btn btn-primary-custom rounded-circle position-absolute end-0 top-50 translate-middle-y me-2 p-0 d-flex align-items-center justify-content-center" type="submit" style="width: 32px; height: 32px;">
-            <i class="fa-solid fa-magnifying-glass fs-6"></i>
-          </button>
+    <!-- Mobile Controls (Theme Toggle + Toggler) -->
+    <div class="d-flex align-items-center gap-2 d-lg-none">
+      <button class="theme-toggle" title="Toggle Theme">
+        <i class="fa-solid fa-sun text-main"></i>
+      </button>
+      <button class="navbar-toggler p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+        <div class="hamburger-icon">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-      </form>
+      </button>
+    </div>
+    
+    <!-- Desktop Search (Centered) -->
+    <div class="navbar-nav mx-auto d-none d-lg-block">
+      <div class="search-container">
+        <form class="d-flex search-form" role="search" action="/listings/search" method="GET">
+          <div class="search-input-group">
+            <input class="form-control" name="query" type="search" placeholder="Where to next?" aria-label="Search" autocomplete="off">
+            <button class="btn btn-search-icon" type="submit">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+        </form>
       </div>
+    </div>
 
-      <div class="navbar-nav ms-auto align-items-center">
-        <a class="nav-link" href="/listings/new">
-          <i class="fa-solid fa-plus-circle me-1"></i>Host your stay
+    <!-- Desktop Controls -->
+    <div class="collapse navbar-collapse d-none d-lg-block" id="desktopNavbar">
+      <div class="navbar-nav align-items-center gap-3 ms-auto">
+        <a class="nav-link host-link" href="/listings/new">
+          Host your stay
         </a>
         
-        <% if(!currUser) { %>
-          <div class="d-flex gap-2 ms-lg-3 mt-3 mt-lg-0">
-            <a class="btn btn-outline-secondary btn-sm px-3 rounded-pill" href="/signin">Sign In</a>
-            <a class="btn btn-primary-custom btn-sm px-3 rounded-pill" href="/signup">Sign Up</a>
+        <button class="theme-toggle" title="Toggle Theme">
+          <i class="fa-solid fa-sun text-main"></i>
+        </button>
+
+        <% if(!locals.currUser) { %>
+          <div class="auth-buttons d-flex gap-2">
+            <a class="btn btn-signin" href="/signin">Sign In</a>
+            <a class="btn btn-signup" href="/signup">Sign Up</a>
           </div>
         <% } else { %>
-          <div class="dropdown ms-lg-3">
-            <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown">
-              <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center text-white" style="width: 32px; height: 32px; font-size: 0.8rem;">
-                <%= currUser.username.charAt(0).toUpperCase() %>
+          <div class="dropdown user-dropdown">
+            <a class="dropdown-trigger d-flex align-items-center gap-2" href="#" id="userDropdown" data-bs-toggle="dropdown">
+              <div class="user-avatar">
+                <%= locals.currUser.username.charAt(0).toUpperCase() %>
               </div>
-              <span class="d-lg-none"><%= currUser.username %></span>
+              <i class="fa-solid fa-bars menu-icon"></i>
             </a>
-            <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
-              <li><span class="dropdown-item-text text-muted small">Logged in as <b><%= currUser.username %></b></span></li>
+            <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg p-2 mt-2" aria-labelledby="userDropdown">
+              <li><div class="dropdown-header pt-0">Welcome, <b><%= locals.currUser.username %></b></div></li>
               <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="/dashboard"><i class="fa-solid fa-chart-line me-2"></i>Dashboard</a></li>
-            <li><a class="dropdown-item text-danger" href="/signout"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a></li>
+              <li><a class="dropdown-item rounded-2" href="/dashboard"><i class="fa-solid fa-chart-line me-2"></i>Dashboard</a></li>
+              <li><a class="dropdown-item rounded-2" href="/listings/new"><i class="fa-solid fa-plus me-2"></i>List your place</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item rounded-2 text-danger" href="/signout"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a></li>
             </ul>
           </div>
         <% } %>
+      </div>
+    </div>
+
+    <!-- Mobile Offcanvas Navbar -->
+    <div class="offcanvas offcanvas-end d-lg-none" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title fw-bold" id="offcanvasNavbarLabel">TripTales</h5>
+        <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body d-flex flex-column">
+        <!-- Mobile Search -->
+        <div class="mobile-search mb-4">
+          <form class="d-flex" action="/listings/search" method="GET">
+            <div class="search-input-group w-100">
+              <input class="form-control" name="query" type="search" placeholder="Search destinations..." aria-label="Search">
+              <button class="btn btn-search-icon" type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="navbar-nav gap-2">
+          <a class="nav-link mobile-nav-item py-3" href="/listings">
+            <i class="fa-solid fa-house me-3"></i>Home
+          </a>
+          <a class="nav-link mobile-nav-item py-3" href="/listings/new">
+            <i class="fa-solid fa-plus-circle me-3"></i>Host your stay
+          </a>
+          <% if(locals.currUser) { %>
+            <a class="nav-link mobile-nav-item py-3" href="/dashboard">
+              <i class="fa-solid fa-chart-line me-3"></i>Dashboard
+            </a>
+          <% } %>
+        </div>
+
+        <div class="mt-auto pt-4 border-top">
+          <% if(!locals.currUser) { %>
+            <div class="d-grid gap-2">
+              <a class="btn btn-signup py-3" href="/signup">Create Account</a>
+              <a class="btn btn-signin py-3 border" href="/signin">Log In</a>
+            </div>
+          <% } else { %>
+            <div class="user-profile-mobile d-flex align-items-center gap-3 mb-4">
+              <div class="user-avatar large">
+                <%= locals.currUser.username.charAt(0).toUpperCase() %>
+              </div>
+              <div>
+                <div class="fw-bold"><%= locals.currUser.username %></div>
+                <div class="text-muted small">Premium Member</div>
+              </div>
+            </div>
+            <a class="btn btn-outline-danger w-100 py-3" href="/signout">
+              <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
+            </a>
+          <% } %>
+        </div>
       </div>
     </div>
   </div>
